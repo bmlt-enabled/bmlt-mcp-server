@@ -45,7 +45,7 @@
   },
   "homepage": "https://github.com/bmlt-enabled/bmlt-mcp-server#readme",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^0.5.0",
+    "@modelcontextprotocol/sdk": "^1.17.5",
     "axios": "^1.6.2",
     "zod": "^3.22.4"
   },
