@@ -13,7 +13,7 @@
     "prepublishOnly": "npm run lint && npm test && npm run build",
     "preversion": "npm run lint && npm test",
     "version": "npm run build",
-    "postversion": "git push && git push --tags",
+    "postversion": "echo \"Version updated successfully\"",
     "test": "echo \"Warning: no tests specified\" && exit 0",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix"
