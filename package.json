@@ -38,7 +38,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bmlt-enabled/bmlt-mcp-server.git"
+    "url": "git+https://github.com/bmlt-enabled/bmlt-mcp-server.git"
   },
   "bugs": {
     "url": "https://github.com/bmlt-enabled/bmlt-mcp-server/issues"
@@ -58,7 +58,7 @@
     "typescript": "^5.0.0"
   },
   "bin": {
-    "bmlt-mcp-server": "./dist/index.js"
+    "bmlt-mcp-server": "dist/index.js"
   },
   "engines": {
     "node": ">=18.0.0"
