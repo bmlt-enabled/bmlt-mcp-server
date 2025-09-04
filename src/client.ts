@@ -23,6 +23,7 @@ import {
   GetCoverageAreaResponse,
   BMLT_ENDPOINTS
 } from './types.js';
+import { smartGeocode, looksLikeAddress } from './geocoding.js';
 
 export class BmltApiClient {
   private axiosInstance: AxiosInstance;
@@ -46,7 +47,7 @@ export class BmltApiClient {
     // Add request interceptor for logging
     this.axiosInstance.interceptors.request.use(
       (config) => {
-        console.log(`Making request to: ${config.url}`);
+        console.error(`Making request to: ${config.url}`);
         return config;
       },
       (error) => {
@@ -127,6 +128,65 @@ export class BmltApiClient {
     format: BmltFormat = this.config.defaultFormat!
   ): Promise<GetSearchResultsResponse> {
     this.validateEndpoint('GetSearchResults', format);
+    return this.makeRequest<GetSearchResultsResponse>(format, 'GetSearchResults', params);
+  }
+
+  // Smart search that handles address geocoding automatically
+  // Features: rate limiting, caching, retry logic, and fallback handling
+  async smartSearchResults(
+    params: GetSearchResultsParams = {},
+    format: BmltFormat = this.config.defaultFormat!
+  ): Promise<GetSearchResultsResponse> {
+    this.validateEndpoint('GetSearchResults', format);
+    
+    // Check if we have an address-based search that might cause geocoding issues
+    if (params.SearchString && params.StringSearchIsAnAddress === 1) {
+      console.error(`Address search detected: "${params.SearchString}", converting to coordinate search`);
+      
+      try {
+        const geocodeResult = await smartGeocode(params.SearchString);
+        
+        if (geocodeResult.success && geocodeResult.result) {
+          console.error(`Successfully geocoded "${params.SearchString}" to coordinates: ${geocodeResult.result.lat}, ${geocodeResult.result.lon}`);
+          
+          // Convert to coordinate-based search
+          const newParams = {
+            ...params,
+            lat_val: geocodeResult.result.lat,
+            long_val: geocodeResult.result.lon,
+            geo_width: params.SearchStringRadius || 25, // Default radius if not specified
+            sort_results_by_distance: 1 // Sort by distance for location searches
+          };
+          
+          // Remove the problematic address search parameters
+          delete newParams.SearchString;
+          delete newParams.StringSearchIsAnAddress;
+          delete newParams.SearchStringRadius;
+          
+          return this.makeRequest<GetSearchResultsResponse>(format, 'GetSearchResults', newParams);
+        } else {
+          console.error(`Geocoding failed for "${params.SearchString}": ${geocodeResult.error}`);
+          // Fall back to text search instead of address search
+          const newParams = {
+            ...params,
+            StringSearchIsAnAddress: 0 // Change to text search
+          };
+          
+          return this.makeRequest<GetSearchResultsResponse>(format, 'GetSearchResults', newParams);
+        }
+      } catch (error) {
+        console.error(`Error during geocoding, falling back to text search:`, error);
+        // Fall back to text search
+        const newParams = {
+          ...params,
+          StringSearchIsAnAddress: 0 // Change to text search
+        };
+        
+        return this.makeRequest<GetSearchResultsResponse>(format, 'GetSearchResults', newParams);
+      }
+    }
+    
+    // For non-address searches, proceed normally
     return this.makeRequest<GetSearchResultsResponse>(format, 'GetSearchResults', params);
   }
 

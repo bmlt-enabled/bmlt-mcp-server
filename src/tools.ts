@@ -6,7 +6,7 @@ export function createBmltTools(client: BmltApiClient): Tool[] {
     // GetSearchResults tool
     {
       name: 'bmlt_search_meetings',
-      description: 'Search for meetings in the BMLT database with various filtering options',
+      description: 'Search for meetings in the BMLT database with various filtering options. For location-based searches, you can use either address strings (which will be automatically geocoded) or specific lat/long coordinates for more reliable results.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -58,16 +58,16 @@ export function createBmltTools(client: BmltApiClient): Tool[] {
           },
           SearchString: {
             type: 'string',
-            description: 'Text to search for in meeting data'
+            description: 'Text to search for in meeting data, or an address for location searches'
           },
           StringSearchIsAnAddress: {
             type: 'number',
             enum: [0, 1],
-            description: 'Treat search string as address (1) or text (0)'
+            description: 'Treat search string as address (1) or text (0). Address searches are automatically geocoded for reliability.'
           },
           SearchStringRadius: {
             type: 'number',
-            description: 'Search radius for address searches'
+            description: 'Search radius in miles for address searches (default: 25)'
           },
           lat_val: {
             type: 'number',
@@ -350,7 +350,7 @@ export async function handleToolCall(
   try {
     switch (name) {
       case 'bmlt_search_meetings':
-        return await client.getSearchResults(params, format);
+        return await client.smartSearchResults(params, format);
 
       case 'bmlt_get_formats':
         return await client.getFormats(params, format);
