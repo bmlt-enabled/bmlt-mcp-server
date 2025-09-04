@@ -1,19 +1,27 @@
 # BMLT MCP Server
 
-A Model Context Protocol (MCP) server that provides comprehensive access to BMLT (Basic Meeting List Tool) APIs for Narcotics Anonymous meetings data.
+[![npm version](https://badge.fury.io/js/bmlt-mcp-server.svg)](https://badge.fury.io/js/bmlt-mcp-server)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js](https://img.shields.io/badge/Node.js-18.0%2B-green.svg)](https://nodejs.org/)
 
-## Overview
+A Model Context Protocol (MCP) server that provides comprehensive access to BMLT (Basic Meeting List Tool) APIs for Narcotics Anonymous meetings data. Features intelligent geocoding, rate limiting, and caching for optimal performance.
 
-This MCP server exposes all BMLT Semantic API endpoints as tools, allowing AI assistants to query meeting data, formats, service bodies, changes, and more from any BMLT root server.
+## 🚀 Overview
 
-## Features
+This MCP server exposes all BMLT Semantic API endpoints as tools, allowing AI assistants like Claude to query meeting data, formats, service bodies, changes, and more from any BMLT root server. Perfect for recovery-focused applications and AI assistants.
 
-- **Complete API Coverage**: All 9 BMLT Semantic API endpoints
-- **Multiple Format Support**: JSON, JSONP, CSV, and TSML formats
-- **Type Safety**: Full TypeScript implementation with comprehensive types
-- **Error Handling**: Robust error handling with meaningful error messages
-- **Validation**: Parameter validation and endpoint compatibility checking
-- **Flexible Configuration**: Environment variable configuration
+## ✨ Features
+
+- **🎯 Complete API Coverage**: All 9 BMLT Semantic API endpoints
+- **🌍 Intelligent Geocoding**: Automatic address-to-coordinates conversion using OpenStreetMap
+- **⚡ Rate Limiting**: Respectful API usage with automatic rate limiting (1 req/sec for geocoding)
+- **🏠 Smart Caching**: 24-hour in-memory cache for geocoding results (up to 100 entries)
+- **🔄 Retry Logic**: Exponential backoff for rate limiting and network errors
+- **📊 Multiple Formats**: JSON, JSONP, CSV, and TSML formats
+- **🔒 Type Safety**: Full TypeScript implementation with comprehensive types
+- **🛡️ Error Handling**: Robust error handling with meaningful error messages
+- **✅ Validation**: Parameter validation and endpoint compatibility checking
+- **⚙️ Flexible Configuration**: Environment variable configuration
 
 ## Available Tools
 
@@ -35,6 +43,12 @@ Search for meetings with extensive filtering options.
 - `StartsAfterH`, `StartsAfterM`: Time filtering
 - `page_size`, `page_num`: Pagination
 - And many more...
+
+**Special Features:**
+- **Intelligent Address Geocoding**: When using `StringSearchIsAnAddress=1`, addresses are automatically geocoded to coordinates using OpenStreetMap's Nominatim service, avoiding BMLT server geocoding issues
+- **Rate-Limited Requests**: Automatic 1.1-second intervals between geocoding requests to respect API limits
+- **Smart Caching**: Geocoding results are cached for 24 hours to improve performance
+- **Fallback Handling**: If geocoding fails, automatically falls back to text search
 
 ### 2. `bmlt_get_formats`
 Retrieve available meeting formats.
@@ -98,23 +112,27 @@ Get geographic coverage area information.
 **Parameters:**
 - `format`: Response format (`json`, `jsonp`)
 
-## Installation
+## 📦 Installation
 
 ### Prerequisites
 
 - Node.js 18.0.0 or later
 - npm or yarn
 
-### Install from npm (when published)
+### Install from npm
 
 ```bash
+# Install globally
 npm install -g bmlt-mcp-server
+
+# Or install locally in your project
+npm install bmlt-mcp-server
 ```
 
 ### Install from source
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/bmlt-enabled/bmlt-mcp-server.git
 cd bmlt-mcp-server
 npm install
 npm run build
