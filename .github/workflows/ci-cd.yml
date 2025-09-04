@@ -81,7 +81,13 @@ jobs:
         TAG_NAME=${GITHUB_REF#refs/tags/}
         VERSION=${TAG_NAME#v}  # Remove 'v' prefix if present
         echo "Setting version to: $VERSION"
-        npm version $VERSION --no-git-tag-version
+        
+        # Update version in package.json
+        npm version $VERSION --no-git-tag-version --allow-same-version
+        
+        # Show the updated package.json version
+        echo "Updated package.json version:"
+        npm version --json
         
     - name: Publish to npm
       run: npm publish
@@ -91,13 +97,22 @@ jobs:
     - name: Create GitHub Release Assets
       run: |
         npm pack
-        mkdir -p release-assets
-        mv bmlt-mcp-server-*.tgz release-assets/
-
-    - name: Create Release 🎉
+        ls -la bmlt-mcp-server-*.tgz
+        
+    - name: Get package info
+      id: package
+      run: |
+        PACKAGE_FILE=$(ls bmlt-mcp-server-*.tgz | head -n1)
+        echo "filename=$PACKAGE_FILE" >> $GITHUB_OUTPUT
+        echo "Package file: $PACKAGE_FILE"
+        
+    - name: Upload to GitHub Release
       uses: ncipollo/release-action@v1.20.0
       with:
-        artifacts: ./release-assets/bmlt-mcp-server-${{ github.event.release.tag_name }}.tgz
+        artifacts: ${{ steps.package.outputs.filename }}
+        allowUpdates: true
+        omitBodyDuringUpdate: true
+        omitNameDuringUpdate: true
 
   # Security audit job
   security:
