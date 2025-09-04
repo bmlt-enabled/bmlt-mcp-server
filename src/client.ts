@@ -23,7 +23,7 @@ import {
   GetCoverageAreaResponse,
   BMLT_ENDPOINTS
 } from './types.js';
-import { smartGeocode, looksLikeAddress } from './geocoding.js';
+import { smartGeocode } from './geocoding.js';
 
 export class BmltApiClient {
   private axiosInstance: AxiosInstance;

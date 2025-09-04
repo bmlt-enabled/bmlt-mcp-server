@@ -1,7 +1,7 @@
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import { BmltApiClient } from './client.js';
 
-export function createBmltTools(client: BmltApiClient): Tool[] {
+export function createBmltTools(_client: BmltApiClient): Tool[] {
   return [
     // GetSearchResults tool
     {
