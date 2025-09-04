@@ -166,6 +166,22 @@ Add this to your Claude Desktop configuration:
 }
 ```
 
+Dev Example
+
+```json
+{
+  "mcpServers": {
+    "bmlt-mcp-server": {
+      "command": "node",
+      "args": ["/PATH_TO_REPO/bmlt-mcp-server/dist/index.js"],
+      "env": {
+        "BMLT_ROOT_SERVER_URL": "https://your-bmlt-server.org/main_server/"
+      }
+    }
+  }
+}
+```
+
 ### Using with other MCP clients
 
 The server follows the standard MCP protocol and can be used with any MCP-compatible client.
