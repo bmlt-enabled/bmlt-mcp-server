@@ -1,0 +1,45 @@
+{
+  "name": "bmlt-mcp-server",
+  "version": "1.0.0",
+  "description": "Model Context Protocol server for BMLT (Basic Meeting List Tool) API",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "watch": "tsx --watch src/index.ts",
+    "prepare": "npm run build",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix"
+  },
+  "keywords": [
+    "mcp",
+    "bmlt",
+    "narcotics-anonymous",
+    "meetings",
+    "api",
+    "model-context-protocol"
+  ],
+  "author": "BMLT Community",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "axios": "^1.6.2",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "bin": {
+    "bmlt-mcp-server": "./dist/index.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
