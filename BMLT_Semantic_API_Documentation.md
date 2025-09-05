@@ -174,9 +174,9 @@ The GetSearchResults endpoint supports extensive filtering options:
 - `page_num={number}`: Page number (defaults to 1)
 
 ### Published Status
-- `advanced_published=1`: Show only published meetings
-- `advanced_published=0`: Show only unpublished meetings
-- `advanced_published={other}`: Show all meetings (default behavior)
+- No parameter: Show only published meetings (default behavior)
+- `advanced_published=0`: Show all meetings (both published and unpublished)
+- `advanced_published=-1`: Show only unpublished meetings
 
 ### Language
 - `lang_enum={language_code}`: Language for format names (e.g., 'en', 'de', 'fr')

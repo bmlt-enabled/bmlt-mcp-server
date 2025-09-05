@@ -198,7 +198,7 @@ export interface GetSearchResultsParams {
   page_num?: number;
   
   // Published status
-  advanced_published?: 0 | 1 | string;
+  advanced_published?: 0 | -1 | string;
   
   // Language
   lang_enum?: string;

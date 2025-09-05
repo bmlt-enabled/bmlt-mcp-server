@@ -6,7 +6,7 @@ export function createBmltTools(_client: BmltApiClient): Tool[] {
     // GetSearchResults tool
     {
       name: 'bmlt_search_meetings',
-      description: 'Search for meetings in the BMLT database with various filtering options. For location-based searches, you can use either address strings (which will be automatically geocoded) or specific lat/long coordinates for more reliable results.',
+      description: 'Search for meetings in the BMLT database with various filtering options including published status filtering. For location-based searches, you can use either address strings (which will be automatically geocoded) or specific lat/long coordinates for more reliable results.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -127,6 +127,13 @@ export function createBmltTools(_client: BmltApiClient): Tool[] {
           lang_enum: {
             type: 'string',
             description: 'Language code for format names'
+          },
+          advanced_published: {
+            oneOf: [
+              { type: 'number', enum: [0, -1] },
+              { type: 'string' }
+            ],
+            description: 'Published status filtering: no parameter = show only published meetings (default), 0 = show all meetings, -1 = show only unpublished meetings'
           }
         }
       }

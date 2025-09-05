@@ -88,6 +88,12 @@ This document provides example questions and queries you can ask Claude once the
 - "Find all meetings that changed their format from in-person to virtual in the last 6 months"
 - "What meetings are both wheelchair accessible and have childcare?"
 
+### Published Status Filtering
+- "Show me only published meetings in my area"
+- "Find unpublished meetings that need approval"
+- "Display all meetings regardless of published status"
+- "Show me published virtual meetings on weekends"
+
 ## 🗺️ Geographic Queries
 
 ### Distance and Location

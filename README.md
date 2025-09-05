@@ -42,6 +42,7 @@ Search for meetings with extensive filtering options.
 - `geo_width`, `geo_width_km`: Search radius
 - `StartsAfterH`, `StartsAfterM`: Time filtering
 - `page_size`, `page_num`: Pagination
+- `advanced_published`: Published status filtering (default=published only, 0=all meetings, -1=unpublished only)
 - And many more...
 
 **Special Features:**
@@ -269,6 +270,20 @@ The server follows the standard MCP protocol and can be used with any MCP-compat
   "name": "bmlt_get_naws_dump",
   "arguments": {
     "sb_id": 123
+  }
+}
+```
+
+### Search for All Meetings (Published and Unpublished)
+
+```typescript
+// Tool call
+{
+  "name": "bmlt_search_meetings",
+  "arguments": {
+    "advanced_published": 0,
+    "venue_types": [2],
+    "page_size": 10
   }
 }
 ```
