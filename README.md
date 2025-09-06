@@ -3,6 +3,7 @@
 [![npm version](https://badge.fury.io/js/bmlt-mcp-server.svg)](https://badge.fury.io/js/bmlt-mcp-server)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-18.0%2B-green.svg)](https://nodejs.org/)
+[![npm](https://img.shields.io/npm/v/bmlt-mcp-server.svg)](https://www.npmjs.com/package/bmlt-mcp-server)
 
 A Model Context Protocol (MCP) server that provides comprehensive access to BMLT (Basic Meeting List Tool) APIs for Narcotics Anonymous meetings data. Features intelligent geocoding, rate limiting, and caching for optimal performance.
 
